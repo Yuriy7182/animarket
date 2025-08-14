@@ -1,3 +1,36 @@
+/* === AniMarket: enhance auth flow === */
+(function(){
+  function qs(s){ return document.querySelector(s); }
+  function ensureAuthUI(){
+    let root = document.getElementById("auth-root");
+    if(!root){
+      root = document.createElement("div");
+      root.id = "auth-root";
+      document.body.appendChild(root);
+    }
+    const params = new URLSearchParams(location.search);
+    const role = params.get("role") === "agency" ? "agency" : "client";
+    root.innerHTML = `
+      <div class="auth-page" style="max-width:560px;margin:40px auto;">
+        <h1>${role==="agency"?"Вход для агентств":"Вход для клиентов"}</h1>
+        <div class="card" style="display:flex;flex-direction:column;gap:12px;padding:20px;background:rgba(255,255,255,.05);border-radius:12px;">
+          <label>Почта</label>
+          <input id="am_email" type="email" placeholder="you@example.com" required style="padding:10px;border-radius:10px;">
+          <label>Пароль</label>
+          <input id="am_pass" type="password" placeholder="••••••••" required style="padding:10px;border-radius:10px;">
+          <button id="am_login" class="primary" style="padding:12px 16px;border-radius:12px;">Войти</button>
+        </div>
+        <div class="muted" style="margin-top:10px;opacity:.85;">
+          Нет аккаунта? <a id="am_reg_link" href="register.html?role=${role}">Зарегистрироваться</a>
+        </div>
+      </div>`;
+    qs("#am_login").addEventListener("click", ()=>{
+      alert("Демо-вход выполнен");
+      location.href = "index.html";
+    });
+  }
+  document.addEventListener("DOMContentLoaded", ensureAuthUI);
+})();
 
 import { auth, db, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "./firebase.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";

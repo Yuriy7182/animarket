@@ -1,3 +1,16 @@
+/* === AniMarket patch additions === */
+.user-pill{
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.15);
+  font-weight:600;
+}
+/* Разнести кнопки "Для клиентов/агентств" */
+a, button {
+  /* no-op; only to ensure this block parses in all builders */
+}
+/* Если есть класс/селектор, применим безопасный отступ */
+.role-btn + .role-btn { margin-left: 20px; }
 
 :root{
   --bg:#0b1020;

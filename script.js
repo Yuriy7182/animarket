@@ -1,3 +1,94 @@
+/* === AniMarket runtime patch ===
+   This block makes required UI changes without touching the original markup.
+   - Rename title to "АниМаркет"
+   - Remove "Профиль" button
+   - Remove the "Минимальный рейтинг" filter on search
+   - Separate and fix top-right role buttons, set destinations
+   - Show user pill (Имя Фамилия) if saved in localStorage
+*/
+(function () {
+  function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+  function byText(tags, pattern){
+    const rex = (pattern instanceof RegExp) ? pattern : new RegExp(pattern, "i");
+    for(const tag of tags){
+      for(const el of qsa(tag)){
+        if (rex.test(el.textContent.trim())) return el;
+      }
+    }
+    return null;
+  }
+  function changeTitle(){
+    const el = byText(["h1","h2",".brand-title",".title"], /Поиск аниматоров/);
+    if(el){ el.textContent = "АниМаркет"; }
+  }
+  function removeProfile(){
+    const el = byText(["a","button"], /Профиль/);
+    if(el && el.parentElement){ el.remove(); }
+  }
+  function removeRatingFilter(){
+    const label = byText(["label"], /Минимальный рейтинг/);
+    if(label){
+      const wrap = label.closest(".field, .form-group, .input-group, .filter, div") || label;
+      wrap.style.display = "none";
+      return;
+    }
+    // fallback: select that has options "Любой" / "4+" / "4.5+" / "5.0"
+    for (const sel of qsa("select")){
+      const has = Array.from(sel.options || []).some(o => /Любой|4\+|4\.5\+|5\.0/i.test(o.text || ""));
+      if(has){
+        (sel.closest(".field, .form-group, .input-group, .filter, div") || sel).style.display = "none";
+        break;
+      }
+    }
+  }
+  function fixRoleButtons(){
+    const client = byText(["a","button"], /Для клиентов/);
+    const agency = byText(["a","button"], /Для агентств/);
+    if(client){
+      client.style.marginRight = "12px";
+      client.style.zIndex = "1";
+      if (client.tagName === "A") client.setAttribute("href", "auth.html?role=client");
+      client.addEventListener("click", (e)=>{
+        if(client.tagName !== "A"){ e.preventDefault(); location.href = "auth.html?role=client"; }
+      }, {once:true});
+    }
+    if(agency){
+      agency.style.marginLeft = "12px";
+      agency.style.zIndex = "1";
+      if (agency.tagName === "A") agency.setAttribute("href", "auth.html?role=agency");
+      agency.addEventListener("click", (e)=>{
+        if(agency.tagName !== "A"){ e.preventDefault(); location.href = "auth.html?role=agency"; }
+      }, {once:true});
+    }
+  }
+  function showUserPill(){
+    const user = JSON.parse(localStorage.getItem("am_user") || "null");
+    if(!user || !user.name) return;
+    // try to find left area in header; otherwise inject
+    let host = document.querySelector(".user-pill-host");
+    if(!host){
+      const header = document.querySelector("header") || document.body;
+      host = document.createElement("div");
+      host.className = "user-pill-host";
+      Object.assign(host.style, {position:"absolute", top:"12px", left:"12px", zIndex: 10});
+      header.appendChild(host);
+    }
+    const pill = document.createElement("div");
+    pill.className = "user-pill";
+    pill.textContent = user.name;
+    host.innerHTML = "";
+    host.appendChild(pill);
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    try{
+      changeTitle();
+      removeProfile();
+      removeRatingFilter();
+      fixRoleButtons();
+      showUserPill();
+    }catch(e){ console.warn("AniMarket patch error", e); }
+  });
+})();
 // Данные о агентствах (пример для прототипа)
 const agencies = [
   {
