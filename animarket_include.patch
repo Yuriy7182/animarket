@@ -1,0 +1,21 @@
+diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@
+-<script src="app_index.js"></script>
++<script src="app_index.js"></script>
+  <script src="script.js"></script>
+diff --git a/auth.html b/auth.html
+--- a/auth.html
++++ b/auth.html
+@@
+-</body>
++</body>  <script src="auth.js"></script>
+</body>
+diff --git a/register.html b/register.html
+--- a/register.html
++++ b/register.html
+@@
+-</body>
++</body>  <script src="register.js"></script>
+</body>
