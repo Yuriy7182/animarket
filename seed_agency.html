@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Seed Agency</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <h1>Добавить демо-агентство (только для тебя)</h1>
+      <a class="nav-link" href="index.html">← На главную</a>
+    </header>
+    <section class="section container">
+      <p class="muted">Нажми кнопку — добавится агентство «Аниматоры Позитив» (Павлодар) со ссылкой на Instagram. Нужен вход.</p>
+      <button class="btn btn--primary" id="btnSeed">Добавить демо</button>
+      <div id="out" class="muted" style="margin-top:10px"></div>
+    </section>
+    <script type="module">
+      import { auth, db } from "./firebase.js";
+      import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+      document.addEventListener("firebase-ready", () => {
+        document.getElementById("btnSeed").addEventListener("click", async () => {
+          if(!auth.currentUser){ alert("Войдите через auth.html"); return; }
+          try{
+            const ref = await addDoc(collection(db, "agencies"), {
+              name: "Аниматоры Позитив",
+              city: "Павлодар",
+              desc: "Аниматоры и праздники. Instagram: https://www.instagram.com/animatori_pozitiff/",
+              characters: ["Клоуны","Принцессы","Супергерои"],
+              rating: 4.8,
+              image: "",
+              animations: [
+                { name:"Шоу с мыльными пузырями", price: 20000, popularity: 15 },
+                { name:"День рождения с принцессой", price: 25000, popularity: 30 }
+              ],
+              contact: { instagram:"https://www.instagram.com/animatori_pozitiff/" },
+              ownerUid: auth.currentUser.uid,
+              createdAt: new Date()
+            });
+            document.getElementById("out").textContent = "Готово! ID: " + ref.id + ". Откройте главную — агентство появится в списке.";
+          }catch(e){
+            alert("Не удалось добавить демо: " + (e.message || e));
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

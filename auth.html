@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход / Регистрация</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <h1>Вход или регистрация</h1>
+      <a href="index.html" class="nav-link">← На главную</a>
+    </header>
+
+    <section class="section container">
+      <div class="admin-form" style="max-width:600px;margin:0 auto">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input id="password" type="password" placeholder="••••••••" />
+        </div>
+        <div class="form-row">
+          <button class="btn btn--primary" id="btnSignIn" disabled>Войти</button>
+          <button class="btn btn--ghost" id="btnSignUp" disabled>Создать аккаунт</button>
+        </div>
+      </div>
+    
+        <div id="clientFields" class="admin-form" style="max-width:600px;margin:12px auto;display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Имя</label>
+              <input id="firstName" placeholder="Иван" />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Фамилия</label>
+              <input id="lastName" placeholder="Иванов" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="address">Адрес</label>
+              <input id="address" placeholder="Улица, дом" />
+            </div>
+            <div class="form-group">
+              <label for="apartment">Квартира</label>
+              <input id="apartment" placeholder="Кв." />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="floor">Этаж</label>
+              <input id="floor" placeholder="Напр.: 5" />
+            </div>
+            <div class="form-group">
+              <label for="entrance">Подъезд</label>
+              <input id="entrance" placeholder="Напр.: 2" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Мобильный номер</label>
+            <input id="phone" placeholder="+7 700 000 00 00" inputmode="tel" autocomplete="tel" />
+          </div>
+        </div>
+    
+    </section>
+
+    <script type="module" src="auth.js"></script>
+  </body>
+</html>

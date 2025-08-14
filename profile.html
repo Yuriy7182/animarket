@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Профиль</h1>
+      <a href="index.html" class="nav-link">Назад к поиску</a>
+    </header>
+    <main id="profile-content" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+      <!-- Профиль будет загружен скриптом -->
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const content = document.getElementById('profile-content');
+        const user = localStorage.getItem('userProfile');
+        if (!user) {
+          content.innerHTML = '<p>Пользователь не зарегистрирован. Пожалуйста, пройдите <a href="register.html">регистрацию</a>.</p>';
+          return;
+        }
+        const data = JSON.parse(user);
+        const container = document.createElement('div');
+        container.style.backgroundColor = '#fff';
+        container.style.padding = '20px';
+        container.style.borderRadius = '8px';
+        container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.04)';
+        // Фото
+        if (data.photo) {
+          const img = document.createElement('img');
+          img.src = data.photo;
+          img.alt = 'Фото пользователя';
+          img.style.width = '120px';
+          img.style.height = '120px';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '50%';
+          img.style.marginBottom = '15px';
+          container.appendChild(img);
+        }
+        // Имя и фамилия
+        const nameEl = document.createElement('h2');
+        nameEl.textContent = `${data.firstName} ${data.lastName}`;
+        container.appendChild(nameEl);
+        // Город
+        const cityEl = document.createElement('p');
+        cityEl.innerHTML = `<strong>Город:</strong> ${data.city}`;
+        container.appendChild(cityEl);
+        // Адрес
+        const addressEl = document.createElement('p');
+        let addressText = `<strong>Адрес:</strong> ${data.street}`;
+        if (data.entrance) addressText += `, подъезд ${data.entrance}`;
+        if (data.floor) addressText += `, этаж ${data.floor}`;
+        if (data.apartment) addressText += `, кв. ${data.apartment}`;
+        addressEl.innerHTML = addressText;
+        container.appendChild(addressEl);
+        content.appendChild(container);
+      });
+    </script>
+  </body>
+</html>

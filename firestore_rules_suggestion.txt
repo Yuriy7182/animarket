@@ -1,0 +1,19 @@
+
+// Пример базовых правил безопасности Firestore (вставлять в Firebase Console -> Firestore -> Rules)
+// ОБЯЗАТЕЛЬНО отредактируй под свои нужды.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /agencies/{agencyId} {
+      allow read: if true; // каталог публичный
+      allow create: if request.auth != null; // только залогиненные
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerUid;
+      match /reviews/{reviewId} {
+        allow read: if true;
+        allow create: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorUid;
+      }
+    }
+  }
+}

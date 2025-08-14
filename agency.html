@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Агентство — детали</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <h1 id="agency-title">Агентство</h1>
+      <a href="register.html" class="nav-link" id="navLink">Регистрация</a>
+    </header>
+    <main id="agency-content" style="padding: 20px">
+      <div id="agency-info">
+        <!-- Информация об агентстве будет загружена скриптом -->
+      </div>
+      <section id="animations-section" style="margin-top: 20px">
+        <h2>Выберите анимацию</h2>
+        <div class="form-group">
+          <label for="sort-select">Сортировать:</label>
+          <select id="sort-select" onchange="sortAnimations()">
+            <option value="price">По цене (от дешевых к дорогим)</option>
+            <option value="popularity">По популярности (от популярных к менее популярным)</option>
+          </select>
+        </div>
+        <div id="animation-list">
+          <!-- Список анимаций будет загружен скриптом -->
+        </div>
+      </section>
+      <section id="comments-section" style="margin-top: 40px;">
+        <h2>Комментарии</h2>
+        <div id="comment-form"></div>
+        <div id="comments-list"></div>
+      </section>
+      <button onclick="goBack()" style="margin-top: 20px">Вернуться к поиску</button>
+    
+      <section class="section container">
+        <h2 class="section-title">Отзывы</h2>
+        <div id="reviews"></div>
+        <form id="review-form" class="admin-form" style="max-width:700px;margin:12px 0" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reviewRating">Оценка</label>
+              <select id="reviewRating">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reviewText">Ваш отзыв</label>
+            <input id="reviewText" placeholder="Коротко опишите опыт" />
+          </div>
+          <button class="btn btn--primary" type="submit">Отправить отзыв</button>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="app_agency.js"></script>
+    <script>
+      // Настройка навигационной ссылки: профиль или регистрация
+      document.addEventListener('DOMContentLoaded', () => {
+        const navLink = document.getElementById('navLink');
+        const user = localStorage.getItem('userProfile');
+        if (navLink) {
+          if (user) {
+            navLink.textContent = 'Профиль';
+            navLink.href = 'profile.html';
+          } else {
+            navLink.textContent = 'Регистрация';
+            navLink.href = 'register.html';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

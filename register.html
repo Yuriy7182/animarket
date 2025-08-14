@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <h1>Регистрация</h1>
+      <a href="index.html" class="nav-link">Назад к поиску</a>
+    </header>
+    <main style="max-width: 600px; margin: 0 auto; padding: 20px;">
+      <form id="register-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="firstName">Имя</label>
+          <input type="text" id="firstName" name="firstName" required />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Фамилия</label>
+          <input type="text" id="lastName" name="lastName" required />
+        </div>
+        <div class="form-group">
+          <label for="cityReg">Город</label>
+          <input type="text" id="cityReg" name="cityReg" required />
+        </div>
+        <div class="form-group">
+          <label for="street">Улица и номер дома</label>
+          <input type="text" id="street" name="street" required />
+        </div>
+        <div class="form-group">
+          <label for="entrance">Подъезд</label>
+          <input type="text" id="entrance" name="entrance" />
+        </div>
+        <div class="form-group">
+          <label for="photo">Фотография (по желанию)</label>
+          <input type="file" id="photo" name="photo" accept="image/*" />
+        </div>
+        <div class="form-group" style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label for="floor">Этаж</label>
+            <input type="text" id="floor" name="floor" />
+          </div>
+          <div style="flex: 1;">
+            <label for="apartment">Квартира</label>
+            <input type="text" id="apartment" name="apartment" />
+          </div>
+        </div>
+        <button type="button" onclick="registerUser()">Зарегистрироваться</button>
+      </form>
+    </main>
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="app_register.js"></script>
+  </body>
+</html>

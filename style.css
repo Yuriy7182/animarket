@@ -1,0 +1,375 @@
+
+:root{
+  --bg:#0b1020;
+  --bg-soft:#11162a;
+  --card:#161b31;
+  --muted:#8e9ac2;
+  --text:#e6e9f7;
+  --brand:#7c8cff;
+  --brand-2:#22d3ee;
+  --accent:#a78bfa;
+  --success:#34d399;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Глобально */
+*{box-sizing:border-box}
+html,body{height:100%}
+body.app-body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(124,140,255,.25), transparent 60%),
+              radial-gradient(1000px 600px at 120% 0%, rgba(34,211,238,.14), transparent 60%),
+              var(--bg);
+  color:var(--text);
+}
+
+/* Шапка */
+.site-header{
+  position:sticky; top:0; z-index:10;
+  background: linear-gradient(90deg, rgba(124,140,255,.35), rgba(34,211,238,.25)), rgba(17,22,42,.65);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 28px 20px;
+  text-align:center;
+}
+.site-header h1{
+  margin:0 0 6px;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing:.2px;
+}
+.site-header p{margin:0 0 12px; color:var(--muted)}
+.site-header .nav-link{
+  display:inline-block;
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  color:var(--text);
+  text-decoration:none;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.site-header .nav-link:hover{ transform:translateY(-1px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.25)}
+
+/* Контейнеры/секции */
+.container{ width:min(1100px, 92%); margin:0 auto }
+.section{ padding: 26px 0 }
+.section-title{ margin:0 0 14px; font-size: clamp(18px, 2.2vw, 24px); }
+
+/* Поисковая форма */
+#search-section .form-group{
+  display:grid;
+  gap:8px;
+}
+#search-section form{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow: var(--shadow);
+  border-radius:16px;
+  padding:16px;
+}
+#search-section .form-group:nth-child(1){ grid-column: span 4 }
+#search-section .form-group:nth-child(2){ grid-column: span 5 }
+#search-section .form-group:nth-child(3){ grid-column: span 2 }
+#search-section button{ grid-column: span 1; align-self:end }
+@media (max-width:900px){
+  #search-section form{ grid-template-columns: 1fr 1fr; }
+  #search-section .form-group:nth-child(1),
+  #search-section .form-group:nth-child(2),
+  #search-section .form-group:nth-child(3){ grid-column: span 1 }
+  #search-section button{ grid-column: span 2 }
+}
+label{ color:var(--muted); font-size:13px }
+input, select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  outline:none;
+  transition:border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+input::placeholder{ color:#9aa6d1 }
+input:focus, select:focus{
+  border-color: rgba(124,140,255,.6);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 0 0 3px rgba(124,140,255,.18);
+}
+
+/* Кнопки */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:12px;
+  font-weight:600;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  user-select:none;
+}
+.btn--primary{
+  background: linear-gradient(180deg, var(--brand), #5d6fff);
+  color:#0e1140;
+  box-shadow: 0 8px 18px rgba(124,140,255,.28);
+}
+.btn--primary:hover{ transform:translateY(-1px); box-shadow: 0 12px 24px rgba(124,140,255,.36) }
+.btn--ghost{
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255,255,255,.16);
+}
+.btn--ghost:hover{ background: rgba(255,255,255,.06) }
+
+/* Сетка карточек агентств */
+#agency-list{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:16px;
+  margin-top: 12px;
+}
+.agency-card{
+  grid-column: span 4;
+  display:grid;
+  grid-template-rows: 180px auto;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.agency-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(124,140,255,.35);
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+}
+.agency-image{
+  width:100%; height:100%; object-fit:cover; background:#0a0f24;
+}
+.agency-info{ padding:14px 14px 16px; display:grid; gap:8px }
+.agency-name{ margin:0; font-size:18px }
+.agency-city, .agency-desc, .agency-characters, .agency-rating{
+  margin:0; color:var(--muted); font-size:14px;
+}
+.agency-rating strong, .agency-city strong, .agency-characters strong{ color:#b7c2ee }
+.btn-details{ justify-self:start; margin-top:4px }
+
+@media (max-width:1100px){ .agency-card{ grid-column: span 6 } }
+@media (max-width:700px){ .agency-card{ grid-column: span 12 } }
+
+/* Футер (на будущее) */
+.site-footer{
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.08);
+  padding: 22px 0;
+  margin-top:30px;
+}
+
+/* Утилиты */
+.hidden{ display:none !important }
+
+/* ===== СТАРЫЕ СТИЛИ (совместимость) ===== */
+/* Стилевой файл для прототипа маркетплейса аниматоров */
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  color: #2f2f33;
+}
+
+/* Основной заголовок */
+header {
+  background: linear-gradient(90deg, #4F46E5, #06B6D4);
+  padding: 25px 20px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+header p {
+  margin: 8px 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Секция поиска */
+#search-section {
+  background-color: #fff;
+  padding: 25px;
+  border-bottom: 1px solid #e5eaf0;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: -15px auto 30px auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccd4e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #6b5fc6;
+  outline: none;
+}
+
+button,
+.btn-details {
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #6D28D9, #8B5CF6);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+button:hover,
+.btn-details:hover {
+  opacity: 0.85;
+}
+
+/* Секция результатов */
+#results-section {
+  padding: 0 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#agency-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.agency-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.agency-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.agency-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.agency-info {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.agency-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  color: #2c295b;
+}
+
+/* Навигационная ссылка в хедере */
+.nav-link {
+  position: absolute;
+  right: 20px;
+  top: 22px;
+  color: #f1f1f1;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.agency-info p {
+  margin: 4px 0;
+  font-size: 0.92rem;
+  color: #555;
+}
+
+.btn-details {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Стили для страницы агентства (детали) */
+#agency-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.animation-card {
+  background-color: #fff;
+  border: 1px solid #e5eaf0;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.animation-card img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* Admin form tweaks */
+.admin-form .form-row{
+  display:grid; grid-template-columns: repeat(12, 1fr); gap:14px;
+}
+.admin-form .form-group{ grid-column: span 4 }
+.admin-form .form-group:has(input[type="number"]) { grid-column: span 2 }
+@media (max-width:900px){
+  .admin-form .form-row{ grid-template-columns: 1fr 1fr }
+  .admin-form .form-group{ grid-column: span 1 }
+}
+.muted{ color: var(--muted); }

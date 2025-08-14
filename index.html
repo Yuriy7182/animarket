@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Маркетплейс аниматоров</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f8f9fa;
+        color: #333;
+      }
+      header {
+        background: linear-gradient(135deg, #ff6f61, #ff9a8b);
+        color: white;
+        text-align: center;
+        padding: 2rem 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2.2rem;
+      }
+      header p {
+        margin: 0.5rem 0 1rem;
+        font-size: 1.1rem;
+      }
+      header a {
+        background: white;
+        color: #ff6f61;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s, color 0.3s;
+      }
+      header a:hover {
+        background: #ff6f61;
+        color: white;
+      }
+      #search-section {
+        background: white;
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+        max-width: 900px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-weight: bold;
+      }
+      input, select, button {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+      button {
+        background: #ff6f61;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #e85c50;
+      }
+      #results-section {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      #agency-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .agency-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .agency-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      .agency-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+      .agency-info {
+        padding: 1rem;
+      }
+      .agency-name {
+        font-size: 1.3rem;
+        margin: 0 0 0.5rem;
+      }
+      .btn-details {
+        background: #ff6f61;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        transition: background 0.3s;
+      }
+      .btn-details:hover {
+        background: #e85c50;
+      }
+    </style>
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <div class="header-actions" style="position:absolute;right:16px;top:16px;display:flex;gap:8px;">
+        <a id="btnForAgencies" class="nav-link" href="#" title="Заявка на размещение">Для агентств</a>
+        <a id="btnForClients" class="nav-link" href="auth.html" title="Вход для клиентов">Для клиентов</a>
+      </div>
+      <h1>Поиск аниматоров</h1>
+      <p>Найдите лучших аниматоров и агентства в своём городе</p>
+      <a href="register.html" id="navLink">Регистрация</a>
+    </header>
+
+    <section id="search-section" class="section section--search container">
+      <form id="search-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="city">Город:</label>
+          <select id="city" name="city" onchange="applyFilters()">
+            <option value="">Выберите город</option>
+            <option value="Павлодар">Павлодар</option>
+            <option value="Аксу">Аксу</option>
+            <option value="Астана">Астана</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="query">Персонаж или агентство:</label>
+          <input type="text" id="query" name="query" placeholder="Например: Человек‑паук" />
+        </div>
+        <div class="form-group">
+          <label for="rating">Минимальный рейтинг:</label>
+          <select id="rating" name="rating">
+            <option value="0">Любой</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+            <option value="4.5">4.5+</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn--primary" onclick="applyFilters()">Найти</button>
+      </form>
+    </section>
+
+    <section id="results-section" class="section container">
+      <h2 class="section-title">Доступные агентства</h2>
+      <div id="agency-list">
+        <!-- Содержимое генерируется скриптом -->
+      </div>
+    </section>
+
+    <template id="agency-template">
+      <article class="agency-card">
+        <img src="" alt="Превью" class="agency-image" />
+        <div class="agency-info">
+          <h3 class="agency-name"></h3>
+          <p class="agency-city"><strong>Город:</strong> <span></span></p>
+          <p class="agency-desc"></p>
+          <p class="agency-characters"><strong>Персонажи:</strong> <span></span></p>
+          <p class="agency-rating"><strong>Рейтинг:</strong> <span></span></p>
+          <button class="btn btn--ghost btn-details" onclick="openAgency(event)">Подробнее</button>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="app_index.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const navLink = document.getElementById('navLink');
+        const user = localStorage.getItem('userProfile');
+        if (user) {
+          navLink.textContent = 'Профиль';
+          navLink.href = 'profile.html';
+        } else {
+          navLink.textContent = 'Регистрация';
+          navLink.href = 'register.html';
+        }
+      });
+    </script>
+      <script>
+      (function(){
+        var el = document.getElementById('btnForAgencies');
+        if(!el) return;
+        var email = (window.APP_CONFIG && window.APP_CONFIG.contactEmail) ? window.APP_CONFIG.contactEmail : 'animarket.kz@gmail.com';
+        var subject = encodeURIComponent('Заявка на размещение в каталоге');
+        var body = encodeURIComponent('Здравствуйте! Хотим разместиться в каталоге.\n\n— Название агентства:\n— Город:\n— Ссылка на Instagram/сайт:\n— Короткое описание:\n— Контакты (телефон, WhatsApp):\n\nСпасибо!');
+        el.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+      })();
+    </script>
+  </body>
+</html>
